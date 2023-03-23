@@ -4,7 +4,12 @@
   },
   "requires": {
     "db": {
-      "kind": "hana-cloud"
+      "kind": "sql"
+    },
+    "[hybrid]": {
+      "db": {
+        "kind": "hana-cloud"
+      }
     }
   }
 }

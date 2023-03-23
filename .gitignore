@@ -26,3 +26,6 @@ hs_err*
 
 .vscode
 .idea
+
+# auto generated wildcard
+.env1

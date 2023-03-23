@@ -2,5 +2,42 @@
 spring:
   config.activate.on-profile: default
 cds:
-  datasource:
+  security.mock.users:
+  - name: rose
+  - name: martha
+    roles:
+      - reviewer
+  - name: amy
+    roles:
+      - processor
+  - name: admin
+    password: admin
+    roles:
+    - admin
+  data-source:
     auto-config.enabled: false
+
+---
+spring:
+  config.activate.on-profile: hybrid
+cds:
+  security.mock.users:
+  - name: rose
+  - name: martha
+    roles:
+      - reviewer
+  - name: amy
+    roles:
+      - processor
+  - name: admin
+    password: admin
+    roles:
+    - admin
+logging.level:
+  org: INFO
+  customer.cofco_salesorder01_cap.handlers: DEBUG
+  com: INFO
+
+---
+spring:
+    profiles: cloud
