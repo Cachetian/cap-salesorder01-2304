@@ -31,7 +31,7 @@ public class CatalogServiceHandler implements EventHandler {
 
 	@Before(event = CdsService.EVENT_READ)
 	public void beforeDisplayInputRead(SalesOrders salesOrders) {
-		LOGGER.debug("Enter event displayInputBeforeRead salesOrders.size", salesOrders.size());
+		LOGGER.debug("Enter event displayInputBeforeRead salesOrders: '{}' using compile", salesOrders);
 	}
 
 }

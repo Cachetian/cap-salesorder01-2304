@@ -29,3 +29,5 @@ hs_err*
 
 # auto generated wildcard
 .env1
+# auto generated wildcard
+.env2
