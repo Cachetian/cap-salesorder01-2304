@@ -1,0 +1,16 @@
+@server = http://localhost:4004
+# @me = Authorization: Basic {{$processEnv USER}}:
+
+### ------------------------------------------------------------------------
+# Get Metadata
+GET http://localhost:4004/catalog/$metadata
+
+### ------------------------------------------------------------------------
+POST http://localhost:4004/catalog/SalesOrders
+Content-Type: application/json;IEEE754Compatible=true
+# Authorization: Basic alice:
+
+{
+  "name": "SO Hello",
+  "description": "This is a sample SO created by http test"
+}
