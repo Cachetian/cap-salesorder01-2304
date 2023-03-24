@@ -127,7 +127,19 @@
                                     }
                                 }
                             },
-                            "hideFilterBar": false
+                            "hideFilterBar": false,
+                            "controlConfiguration": {
+                                "@com.sap.vocabularies.UI.v1.LineItem": {
+                                    "actions": {
+                                        "customActionWithUIExt01HelloId": {
+                                            "id": "customActionWithUIExt01HelloIdButton",
+                                            "text": "HelloUI",
+                                            "press": "cofco.mgrsalesorder01.mgrsalesorder01.custom.ListReportExtController.customActionWithUIExt01Hello",
+                                            "requiresSelection": false
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 },
