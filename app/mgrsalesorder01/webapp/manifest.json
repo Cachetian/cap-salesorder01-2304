@@ -99,7 +99,6 @@
             "css": []
         },
         "routing": {
-            "config": {},
             "routes": [
                 {
                     "pattern": ":?query:",
@@ -127,7 +126,8 @@
                                         "route": "SalesOrdersObjectPage"
                                     }
                                 }
-                            }
+                            },
+                            "hideFilterBar": false
                         }
                     }
                 },
@@ -138,10 +138,16 @@
                     "options": {
                         "settings": {
                             "editableHeaderContent": false,
-                            "entitySet": "SalesOrders"
+                            "entitySet": "SalesOrders",
+                            "sectionLayout": "Tabs"
                         }
                     }
                 }
+            }
+        },
+        "extends": {
+            "extensions": {
+                "sap.ui.controllerExtensions": {}
             }
         }
     },

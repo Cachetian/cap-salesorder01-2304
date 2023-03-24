@@ -20,6 +20,7 @@ cds:
 ---
 spring:
   config.activate.on-profile: hybrid
+  web.resources.static-locations: "file:./app"
 cds:
   security.mock.users:
   - name: rose

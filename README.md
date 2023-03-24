@@ -32,3 +32,9 @@ cds deploy --to h2 --dry
 mbt build
 https://github.com/Cachetian/cap_so_2210/
 https://cap.cloud.sap/docs/guides/databases?q=cds+deploy+--to+hana
+
+
+# UI
+@(path:'/odata/v4/CatalogService')
+@(path:'odata/v4/CatalogService/')
+@(path:'/mgrsalesorder01/webapp/odata/v4/CatalogService/')

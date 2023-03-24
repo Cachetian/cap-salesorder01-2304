@@ -1,6 +1,8 @@
 @server = http://localhost:4004
 # @me = Authorization: Basic {{$processEnv USER}}:
 
+# For Node.js (cds watch)
+
 ### ------------------------------------------------------------------------
 # Get Metadata
 GET http://localhost:4004/catalog/$metadata
@@ -11,6 +13,18 @@ Content-Type: application/json;IEEE754Compatible=true
 # Authorization: Basic alice:
 
 {
-  "name": "SO Hello",
+  "name": "SO Hello 2",
+  "description": "This is a sample SO created by http test"
+}
+
+# For Java app
+
+### ------------------------------------------------------------------------
+POST http://localhost:8080/odata/v4/CatalogService/SalesOrders
+Content-Type: application/json;IEEE754Compatible=true
+Authorization: Basic YWRtaW46YWRtaW4=
+
+{
+  "name": "SO Hello 2",
   "description": "This is a sample SO created by http test"
 }
