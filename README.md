@@ -43,3 +43,16 @@ cds bind --exec mvn spring-boot:run --spring.profiles.active=hybrid
 cds bind --exec mvn spring-boot:run -Drun.profiles=hybrid
 mvn spring-boot:run --spring.profiles.active=hybrid
 cf login -a https://api.cf.us10-001.hana.ondemand.com --sso
+https://github.com/SAP-samples/fiori-elements-feature-showcase
+Side Effects
+https://github.com/Cachetian/cap-java-2207-action-based-custom-create
+
+```
+@(
+    cds.odata.bindingparameter.name : '_it',
+    cds.odata.bindingparameter.collection,
+    Common.SideEffects              : {TargetEntities : [_it]}
+)
+```
+valueList
+@Common.ValueList 

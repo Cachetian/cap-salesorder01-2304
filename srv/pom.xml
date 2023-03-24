@@ -20,6 +20,11 @@
 			<artifactId>cds-starter-spring-boot</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
+
 		<!-- ODATA PROTOCOL ADAPTER -->
 		<dependency>
 			<groupId>com.sap.cds</groupId>

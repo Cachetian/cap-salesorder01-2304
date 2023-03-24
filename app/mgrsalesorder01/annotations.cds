@@ -88,3 +88,12 @@ annotate service.SalesOrders with @(
             },],
     }
 );
+annotate service.SalesOrders with @(
+    UI.Identification : [
+        {
+            $Type : 'UI.DataFieldForAction',
+            Action : 'CatalogService.refineDescription',
+            Label : '{i18n>Refinedescription}',
+        },
+    ]
+);
