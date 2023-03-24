@@ -56,3 +56,10 @@ https://github.com/Cachetian/cap-java-2207-action-based-custom-create
 ```
 valueList
 @Common.ValueList 
+
+# Build
+mbt build
+cf deploy mta_archives/cofco-salesorder01-cap_1.0.0-
+SNAPSHOT.mtar 
+cf apps
+cf logs cofco-salesorder01-cap-srv
