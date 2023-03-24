@@ -1,46 +1,93 @@
-_schema-version: '3.1'
+_schema-version: "3.1"
 ID: cofco-salesorder01-cap
+description: cofco-salesorder01-cap application
 version: 1.0.0-SNAPSHOT
-description: "cofco-salesorder01-cap application"
-parameters:
-  enable-parallel-deployments: true
 modules:
-  - name: cofco-salesorder01-cap-srv
-    type: java
-    path: srv
-    parameters:
-      buildpack: java_buildpack
-    properties:
-      SPRING_PROFILES_ACTIVE: cloud
-    build-parameters:
-      builder: custom
-      commands:
-        - mvn clean package -DskipTests=true
-      build-result: target/*-exec.jar
-    provides:
-      - name: srv-api # required by consumers of CAP services (e.g. approuter)
-        properties:
-          srv-url: ${default-url}
-    requires:
-      - name: cofco-salesorder01-cap-db
-
-  - name: cofco-salesorder01-cap-db-deployer
-    type: hdb
-    path: db
-    parameters:
-      buildpack: nodejs_buildpack
-    build-parameters:
-      builder: custom
-      commands:
-        - npm run build
-    requires:
-      - name: cofco-salesorder01-cap-db
-
-resources:
+- name: cofco-salesorder01-cap-srv
+  type: java
+  path: srv
+  properties:
+    SPRING_PROFILES_ACTIVE: cloud
+  requires:
   - name: cofco-salesorder01-cap-db
-    type: com.sap.xs.hdi-container
-    parameters:
-      service: hana
-      service-plan: hdi-shared
+  provides:
+  - name: srv-api
     properties:
-      hdi-service-name: ${service-name}
+      srv-url: ${default-url}
+  parameters:
+    buildpack: java_buildpack
+  build-parameters:
+    build-result: target/*-exec.jar
+    builder: custom
+    commands:
+    - mvn clean package -DskipTests=true
+- name: cofco-salesorder01-cap-db-deployer
+  type: hdb
+  path: db
+  requires:
+  - name: cofco-salesorder01-cap-db
+  parameters:
+    buildpack: nodejs_buildpack
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+- name: cofco-salesorder01-cap-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: cofco-salesorder01-cap-repo-host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - cofcomgrsalesorder01mgrsalesorder01.zip
+      name: cofcomgrsalesorder01mgrsalesorder01
+      target-path: resources/
+- name: cofcomgrsalesorder01mgrsalesorder01
+  type: html5
+  path: app/mgrsalesorder01
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: cofco-salesorder01-cap-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+  properties:
+    hdi-service-name: ${service-name}
+- name: cofco-salesorder01-cap-repo-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: cofco-salesorder01-cap-html5-srv
+    service-plan: app-host
+- name: cofco-salesorder01-cap-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: false
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          existing_destinations_policy: update
+      version: 1.0.0
+    service: destination
+    service-name: cofco-salesorder01-cap-destination-service
+    service-plan: lite
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true

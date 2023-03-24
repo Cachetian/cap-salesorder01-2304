@@ -12,6 +12,7 @@ entity SalesOrders : cuid, managed {
   name        : String;
   description : String;
 }
+
 entity SalesOrderHeaders : cuid, managed {
   CurrencyCode        : String(5);
   GrossAmount         : Decimal(15, 3);
