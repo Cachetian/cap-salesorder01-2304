@@ -37,6 +37,16 @@ annotate service.SalesOrders with @(
             $Type : 'UI.DataField',
             Value : createdAt,
         },
+        {
+            $Type : 'UI.DataFieldForAction',
+            Action : 'CatalogService.EntityContainer/unboundCustomHello',
+            Label : 'Hello',
+        },
+        {
+            $Type : 'UI.DataFieldForAction',
+            Action : 'CatalogService.EntityContainer/unboundCustomCreateSalesOrder',
+            Label : 'Create New',
+        },
     ]
 );
 annotate service.SalesOrders with @(

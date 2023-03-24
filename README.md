@@ -38,3 +38,8 @@ https://cap.cloud.sap/docs/guides/databases?q=cds+deploy+--to+hana
 @(path:'/odata/v4/CatalogService')
 @(path:'odata/v4/CatalogService/')
 @(path:'/mgrsalesorder01/webapp/odata/v4/CatalogService/')
+cds bind --exec mvn spring-boot:run
+cds bind --exec mvn spring-boot:run --spring.profiles.active=hybrid
+cds bind --exec mvn spring-boot:run -Drun.profiles=hybrid
+mvn spring-boot:run --spring.profiles.active=hybrid
+cf login -a https://api.cf.us10-001.hana.ondemand.com --sso
