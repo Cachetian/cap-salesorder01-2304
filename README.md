@@ -65,4 +65,7 @@ cf apps
 cf logs cofco-salesorder01-cap-srv
 
 # Deploy
+mvn spring-boot:run -Dspring-boot.run.profiles=hybrid
+cds bind --exec '--' mvn spring-boot:run -Dspring-boot.run.profiles=hybrid
 https://help.sap.com/docs/WZ_STD/8c8e1958338140699bd4811b37b82ece/1b80373be4fc4cbb8a7529495c9c9d62.html
+https://cap.cloud.sap/docs/assets/cds-maven-plugin-site/plugin-info.html
