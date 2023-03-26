@@ -10,6 +10,9 @@
       "db": {
         "kind": "hana-cloud"
       }
+    },
+    "auth": {
+      "kind": "xsuaa"
     }
   }
 }

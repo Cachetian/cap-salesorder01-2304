@@ -63,3 +63,6 @@ cf deploy mta_archives/cofco-salesorder01-cap_1.0.0-
 SNAPSHOT.mtar 
 cf apps
 cf logs cofco-salesorder01-cap-srv
+
+# Deploy
+https://help.sap.com/docs/WZ_STD/8c8e1958338140699bd4811b37b82ece/1b80373be4fc4cbb8a7529495c9c9d62.html
