@@ -10,6 +10,7 @@ modules:
     SPRING_PROFILES_ACTIVE: cloud
   requires:
   - name: cofco-salesorder01-cap-db
+  - name: cofco-salesorder01-cap-auth
   provides:
   - name: srv-api
     properties:
@@ -88,6 +89,15 @@ resources:
     service: destination
     service-name: cofco-salesorder01-cap-destination-service
     service-plan: lite
+- name: cofco-salesorder01-cap-auth
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: xsuaa
+    service-plan: application
+    path: ./xs-security.json
+    config:
+      xsappname: cofco-salesorder01-cap-${org}-${space}
+      tenant-mode: dedicated
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true

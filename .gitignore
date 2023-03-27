@@ -31,3 +31,7 @@ hs_err*
 .env1
 # auto generated wildcard
 .env2
+# build generated
+resources
+dist
+package-lock.json
