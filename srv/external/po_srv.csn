@@ -4,13 +4,13 @@
   },
   "$version": "2.0",
   "definitions": {
-    "po_srv.saveProducts": {
+    "SalesOrderService.saveProducts": {
       "kind": "action",
       "@cds.external": true,
       "params": {
         "products": {
           "items": {
-            "type": "po_srv.Products",
+            "type": "SalesOrderService.Products",
             "notNull": true
           }
         }
@@ -20,7 +20,7 @@
         "notNull": false
       }
     },
-    "po_srv.sayHello": {
+    "SalesOrderService.sayHello": {
       "kind": "action",
       "@cds.external": true,
       "returns": {
@@ -28,7 +28,7 @@
         "notNull": false
       }
     },
-    "po_srv.SalesOrders": {
+    "SalesOrderService.SalesOrders": {
       "kind": "entity",
       "@cds.external": true,
       "@cds.persistence.skip": true,
@@ -73,7 +73,7 @@
         "DraftAdministrativeData": {
           "type": "cds.Association",
           "@cds.ambiguous": "missing on condition?",
-          "target": "po_srv.DraftAdministrativeData",
+          "target": "SalesOrderService.DraftAdministrativeData",
           "cardinality": {
             "max": 1
           },
@@ -83,7 +83,7 @@
         "SiblingEntity": {
           "type": "cds.Association",
           "@cds.ambiguous": "missing on condition?",
-          "target": "po_srv.SalesOrders",
+          "target": "SalesOrderService.SalesOrders",
           "cardinality": {
             "max": 1
           },
@@ -126,14 +126,14 @@
             }
           },
           "returns": {
-            "type": "po_srv.SalesOrders",
+            "type": "SalesOrderService.SalesOrders",
             "notNull": false
           }
         },
         "draftActivate": {
           "kind": "action",
           "returns": {
-            "type": "po_srv.SalesOrders",
+            "type": "SalesOrderService.SalesOrders",
             "notNull": false
           }
         },
@@ -146,7 +146,7 @@
             }
           },
           "returns": {
-            "type": "po_srv.SalesOrders",
+            "type": "SalesOrderService.SalesOrders",
             "notNull": false
           }
         }
@@ -224,12 +224,12 @@
       ],
       "@Common.DraftRoot": {
         "$Type": "Common.DraftRootType",
-        "ActivationAction": "po_srv.draftActivate",
-        "EditAction": "po_srv.draftEdit",
-        "PreparationAction": "po_srv.draftPrepare"
+        "ActivationAction": "SalesOrderService.draftActivate",
+        "EditAction": "SalesOrderService.draftEdit",
+        "PreparationAction": "SalesOrderService.draftPrepare"
       }
     },
-    "po_srv.SalesOrderHeaders": {
+    "SalesOrderService.SalesOrderHeaders": {
       "kind": "entity",
       "@cds.external": true,
       "@cds.persistence.skip": true,
@@ -281,7 +281,7 @@
         "Items": {
           "type": "cds.Association",
           "@cds.ambiguous": "missing on condition?",
-          "target": "po_srv.SalesOrderItems",
+          "target": "SalesOrderService.SalesOrderItems",
           "cardinality": {
             "max": "*"
           },
@@ -289,7 +289,7 @@
         }
       }
     },
-    "po_srv.SalesOrderItems": {
+    "SalesOrderService.SalesOrderItems": {
       "kind": "entity",
       "@cds.external": true,
       "@cds.persistence.skip": true,
@@ -346,7 +346,7 @@
         "Product": {
           "type": "cds.Association",
           "@cds.ambiguous": "missing on condition?",
-          "target": "po_srv.Products",
+          "target": "SalesOrderService.Products",
           "cardinality": {
             "max": 1
           },
@@ -373,7 +373,7 @@
         "Header": {
           "type": "cds.Association",
           "@cds.ambiguous": "missing on condition?",
-          "target": "po_srv.SalesOrderHeaders",
+          "target": "SalesOrderService.SalesOrderHeaders",
           "cardinality": {
             "max": 1
           },
@@ -398,7 +398,7 @@
         }
       }
     },
-    "po_srv.Products": {
+    "SalesOrderService.Products": {
       "kind": "entity",
       "@cds.external": true,
       "@cds.persistence.skip": true,
@@ -745,7 +745,7 @@
         }
       }
     },
-    "po_srv.DraftAdministrativeData": {
+    "SalesOrderService.DraftAdministrativeData": {
       "kind": "entity",
       "@cds.external": true,
       "@cds.persistence.skip": true,
@@ -804,7 +804,7 @@
       },
       "@Common.Label": "Draft Administrative Data"
     },
-    "po_srv": {
+    "SalesOrderService": {
       "kind": "service",
       "@cds.external": true
     }

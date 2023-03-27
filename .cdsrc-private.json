@@ -15,6 +15,22 @@
         "vcap": {
           "name": "db"
         }
+      },
+      
+      "destinations": {
+        "binding": {
+          "type": "cf",
+          "apiEndpoint": "https://api.cf.us10-001.hana.ondemand.com",
+          "org": "a9877d78trial",
+          "space": "dev",
+          "instance": "cofco-salesorder01-cap-destination-service",
+          "key": "cofco-salesorder01-cap-destination-service-key",
+          "resolved": false
+        },
+        "kind": "destinations",
+        "vcap": {
+          "name": "destinations"
+        }
       }
     }
   }

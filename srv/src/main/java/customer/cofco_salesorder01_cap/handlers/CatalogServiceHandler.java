@@ -6,12 +6,15 @@ import java.util.stream.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.sap.cds.Result;
 import com.sap.cds.ql.Insert;
+import com.sap.cds.ql.Select;
 import com.sap.cds.ql.Update;
 import com.sap.cds.services.cds.CdsService;
+import com.sap.cds.services.cds.CqnService;
 import com.sap.cds.services.handler.EventHandler;
 import com.sap.cds.services.handler.annotations.After;
 import com.sap.cds.services.handler.annotations.Before;
@@ -27,8 +30,11 @@ import cds.gen.catalogservice.SalesOrders;
 import cds.gen.catalogservice.SalesOrders_;
 import cds.gen.catalogservice.UnboundCustomCreateSalesOrderContext;
 import cds.gen.catalogservice.UnboundCustomHelloContext;
+import cds.gen.SalesOrderService.PoSrv_;
+import cds.gen.SalesOrderService.Products;
 import cds.gen.catalogservice.Books;
 import static cds.gen.catalogservice.CatalogService_.SALES_ORDERS;
+import static cds.gen.SalesOrderService.PoSrv_.PRODUCTS;
 
 @Component
 @ServiceName(CatalogService_.CDS_NAME)
@@ -41,6 +47,10 @@ public class CatalogServiceHandler implements EventHandler {
 
 	@Autowired
 	PersistenceService db;
+
+	@Autowired
+	@Qualifier(PoSrv_.CDS_NAME)
+	CqnService poService;
 
 	@After(event = CdsService.EVENT_READ)
 	public void discountBooks(Stream<Books> books) {
@@ -70,6 +80,11 @@ public class CatalogServiceHandler implements EventHandler {
 			// executes inside a dedicated ChangeSet Context
 			SalesOrders entityNew = SalesOrders.create();
 			entityNew.setName("SO00_New" + new Date().getTime());
+
+			// Remote service example
+			Result result = poService.run(Select.from(PRODUCTS).where(p-> p.Product().eq("getProduct")));
+			Products product = result.single(Products.class);
+			entityNew.setDescription("description is product ID: "+ product.getProduct());
 			db.run(Insert.into(SALES_ORDERS).entry(entityNew));
 		});
 		

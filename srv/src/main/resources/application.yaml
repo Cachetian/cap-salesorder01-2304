@@ -35,15 +35,15 @@ cds:
     roles:
     - admin
   remote.services:
-    '[po_srv]':
+    '[SalesOrderService]':
       destination:
         name: COFCO_CAP_SO_PO
         type: "odata-v4"
     
 logging.level:
-  org: INFO
+  org: DEBUG
   customer.cofco_salesorder01_cap.handlers: DEBUG
-  com: INFO
+  com: DEBUG
 
 ---
 spring:

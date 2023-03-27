@@ -84,3 +84,8 @@ cds bind --exec '--' mvn spring-boot:run -Dspring-boot.run.profiles=hybrid
 https://cap.cloud.sap/docs/java/changeset-contexts#overview
 ## Remote Service
 https://cap.cloud.sap/docs/java/remote-services
+
+https://cap.cloud.sap/docs/guides/using-services?q=cds+bind#using-remote-services
+cf create-service-key cofco-salesorder01-cap-auth cofco-salesorder01-cap-auth-key
+cf create-service-key cofco-salesorder01-cap-destination-service cofco-salesorder01-cap-destination-service-key
+cds bind -2 cofco-salesorder01-cap-auth,cofco-salesorder01-cap-destination-service
