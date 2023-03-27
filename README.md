@@ -89,3 +89,11 @@ https://cap.cloud.sap/docs/guides/using-services?q=cds+bind#using-remote-service
 cf create-service-key cofco-salesorder01-cap-auth cofco-salesorder01-cap-auth-key
 cf create-service-key cofco-salesorder01-cap-destination-service cofco-salesorder01-cap-destination-service-key
 cds bind -2 cofco-salesorder01-cap-auth,cofco-salesorder01-cap-destination-service
+
+## Messaging
+https://cap.cloud.sap/docs/guides/messaging/#intrinsic-eventing-in-cap-core
+https://github.com/SAP-samples/cloud-cap-samples/blob/main/reviews/package.json
+https://cap.cloud.sap/docs/guides/messaging/event-mesh#run-tests-in-hybrid-setup
+https://cap.cloud.sap/docs/java/messaging-foundation#pub-sub-messaging
+Cloud SDk
+https://sap.github.io/cloud-sdk/
