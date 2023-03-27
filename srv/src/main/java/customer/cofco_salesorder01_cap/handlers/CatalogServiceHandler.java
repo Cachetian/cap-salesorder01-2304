@@ -82,7 +82,7 @@ public class CatalogServiceHandler implements EventHandler {
 			entityNew.setName("SO00_New" + new Date().getTime());
 
 			// Remote service example
-			Result result = poService.run(Select.from(PRODUCTS).where(p-> p.Product().eq("getProduct")));
+			Result result = poService.run(Select.from(PRODUCTS).where(p-> p.Product().eq("1c8e97f4-ad70-435c-bb51-a7098b62d23d")));
 			Products product = result.single(Products.class);
 			entityNew.setDescription("description is product ID: "+ product.getProduct());
 			db.run(Insert.into(SALES_ORDERS).entry(entityNew));
