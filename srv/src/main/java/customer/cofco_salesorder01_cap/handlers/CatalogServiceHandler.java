@@ -30,11 +30,11 @@ import cds.gen.catalogservice.SalesOrders;
 import cds.gen.catalogservice.SalesOrders_;
 import cds.gen.catalogservice.UnboundCustomCreateSalesOrderContext;
 import cds.gen.catalogservice.UnboundCustomHelloContext;
-import cds.gen.SalesOrderService.PoSrv_;
-import cds.gen.SalesOrderService.Products;
+import cds.gen.salesorderservice.Products;
+import cds.gen.salesorderservice.SalesOrderService_;
 import cds.gen.catalogservice.Books;
 import static cds.gen.catalogservice.CatalogService_.SALES_ORDERS;
-import static cds.gen.SalesOrderService.PoSrv_.PRODUCTS;
+import static cds.gen.salesorderservice.SalesOrderService_.PRODUCTS;
 
 @Component
 @ServiceName(CatalogService_.CDS_NAME)
@@ -49,7 +49,7 @@ public class CatalogServiceHandler implements EventHandler {
 	PersistenceService db;
 
 	@Autowired
-	@Qualifier(PoSrv_.CDS_NAME)
+	@Qualifier(SalesOrderService_.CDS_NAME)
 	CqnService poService;
 
 	@After(event = CdsService.EVENT_READ)
