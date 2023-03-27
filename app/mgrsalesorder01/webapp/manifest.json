@@ -163,6 +163,10 @@
             }
         }
     },
+    "sap.cloud": {
+        "public": true,
+        "service": "cofcoso01capapp"
+    },
     "sap.fiori": {
         "registrationIds": [],
         "archeType": "transactional"

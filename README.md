@@ -71,3 +71,4 @@ https://help.sap.com/docs/WZ_STD/8c8e1958338140699bd4811b37b82ece/1b80373be4fc4c
 ## Add auth
 https://cap.cloud.sap/docs/guides/authorization
 cds add xsuaa
+https://github.com/SAP-samples/cap-sflight/blob/main/mta-java.yaml

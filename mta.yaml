@@ -57,6 +57,38 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
+# ------------------ DESTINATION CONTENT ---------------------
+- name: cofco-salesorder01-cap-dest-content
+# ------------------------------------------------------------
+  type: com.sap.application.content
+  build-parameters:
+    no-source: true
+  requires:
+  - name: cofco-salesorder01-cap-auth
+    parameters:
+      service-key:
+        name: sflight-uaa-key
+  - name: cofco-salesorder01-cap-repo-host
+    parameters:
+      service-key:
+        name: cofco-salesorder01-cap-repo-host-key
+  - name: cofco-salesorder01-cap-destination-service
+    parameters:
+      content-target: true
+  parameters:
+    content:
+      instance:
+        existing_destinations_policy: update
+        destinations:
+          - Name: cofco-salesorder01-cap-html5-repository
+            ServiceInstanceName: cofco-salesorder01-cap-repo-host
+            ServiceKeyName: cofco-salesorder01-cap-repo-host-key
+            sap.cloud.service: cofcoso01capapp
+          - Name: cofco-salesorder01-cap-uaa
+            Authentication: OAuth2UserTokenExchange
+            ServiceInstanceName: cofco-salesorder01-cap-auth
+            ServiceKeyName: cofco-salesorder01-cap-auth-key
+            sap.cloud.service: cofcoso01capapp
 resources:
 - name: cofco-salesorder01-cap-db
   type: com.sap.xs.hdi-container
@@ -69,13 +101,12 @@ resources:
   type: org.cloudfoundry.managed-service
   parameters:
     service: html5-apps-repo
-    service-name: cofco-salesorder01-cap-html5-srv
     service-plan: app-host
 - name: cofco-salesorder01-cap-destination-service
   type: org.cloudfoundry.managed-service
   parameters:
     config:
-      HTML5Runtime_enabled: false
+      HTML5Runtime_enabled: true
       init_data:
         instance:
           destinations:
@@ -87,7 +118,6 @@ resources:
           existing_destinations_policy: update
       version: 1.0.0
     service: destination
-    service-name: cofco-salesorder01-cap-destination-service
     service-plan: lite
 - name: cofco-salesorder01-cap-auth
   type: org.cloudfoundry.managed-service
