@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="SalesOrderService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="SalesOrders" EntityType="SalesOrderService.SalesOrders">
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="SalesOrders"/>
+                </EntitySet>
+                <EntitySet Name="SalesOrderHeaders" EntityType="SalesOrderService.SalesOrderHeaders">
+                    <NavigationPropertyBinding Path="Items" Target="SalesOrderItems"/>
+                </EntitySet>
+                <EntitySet Name="SalesOrderItems" EntityType="SalesOrderService.SalesOrderItems">
+                    <NavigationPropertyBinding Path="Product" Target="Products"/>
+                    <NavigationPropertyBinding Path="Header" Target="SalesOrderHeaders"/>
+                </EntitySet>
+                <EntitySet Name="Products" EntityType="SalesOrderService.Products"/>
+                <ActionImport Name="saveProducts" Action="SalesOrderService.saveProducts"/>
+                <ActionImport Name="sayHello" Action="SalesOrderService.sayHello"/>
+            </EntityContainer>
+            <EntityType Name="SalesOrders">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="desc" Type="Edm.String" MaxLength="255"/>
+                <Property Name="comment" Type="Edm.String" MaxLength="255"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="SalesOrderService.DraftAdministrativeData" ContainsTarget="true"/>
+                <NavigationProperty Name="SiblingEntity" Type="SalesOrderService.SalesOrders"/>
+            </EntityType>
+            <EntityType Name="SalesOrderHeaders">
+                <Key>
+                    <PropertyRef Name="SalesOrderID"/>
+                </Key>
+                <Property Name="SalesOrderID" Type="Edm.Int64" Nullable="false"/>
+                <Property Name="CreatedAt" Type="Edm.DateTimeOffset"/>
+                <Property Name="CurrencyCode" Type="Edm.String" MaxLength="5"/>
+                <Property Name="GrossAmount" Type="Edm.Decimal" Scale="3" Precision="15"/>
+                <Property Name="LifeCycleStatus" Type="Edm.String" MaxLength="1" Nullable="false"/>
+                <Property Name="LifeCycleStatusName" Type="Edm.String" MaxLength="255" Nullable="false"/>
+                <Property Name="NetAmount" Type="Edm.Decimal" Scale="3" Precision="15"/>
+                <Property Name="TaxAmount" Type="Edm.Decimal" Scale="3" Precision="15"/>
+                <NavigationProperty Name="Items" Type="Collection(SalesOrderService.SalesOrderItems)" Partner="Header"/>
+            </EntityType>
+            <EntityType Name="SalesOrderItems">
+                <Key>
+                    <PropertyRef Name="SalesOrderID"/>
+                    <PropertyRef Name="ItemNumber"/>
+                </Key>
+                <Property Name="SalesOrderID" Type="Edm.Int64" Nullable="false"/>
+                <Property Name="ItemNumber" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="CurrencyCode" Type="Edm.String" MaxLength="5"/>
+                <Property Name="DeliveryDate" Type="Edm.DateTimeOffset"/>
+                <Property Name="GrossAmount" Type="Edm.Decimal" Scale="3" Precision="15"/>
+                <Property Name="NetAmount" Type="Edm.Decimal" Scale="3" Precision="15"/>
+                <Property Name="Quantity" Type="Edm.Decimal" Scale="3" Precision="15"/>
+                <Property Name="QuantityUnit" Type="Edm.String" MaxLength="3"/>
+                <Property Name="TaxAmount" Type="Edm.Decimal" Scale="3" Precision="15"/>
+                <NavigationProperty Name="Product" Type="SalesOrderService.Products">
+                    <ReferentialConstraint Property="Product_Product" ReferencedProperty="Product"/>
+                </NavigationProperty>
+                <Property Name="Product_Product" Type="Edm.String" MaxLength="40"/>
+                <NavigationProperty Name="Header" Type="SalesOrderService.SalesOrderHeaders" Partner="Items">
+                    <ReferentialConstraint Property="Header_SalesOrderID" ReferencedProperty="SalesOrderID"/>
+                </NavigationProperty>
+                <Property Name="Header_SalesOrderID" Type="Edm.Int64"/>
+            </EntityType>
+            <EntityType Name="Products">
+                <Key>
+                    <PropertyRef Name="Product"/>
+                </Key>
+                <Property Name="Product" Type="Edm.String" MaxLength="40" Nullable="false"/>
+                <Property Name="ProductType" Type="Edm.String" MaxLength="4"/>
+                <Property Name="CrossPlantStatus" Type="Edm.String" MaxLength="2"/>
+                <Property Name="CrossPlantStatusValidityDate" Type="Edm.Date"/>
+                <Property Name="CreationDate" Type="Edm.Date"/>
+                <Property Name="CreatedByUser" Type="Edm.String" MaxLength="12"/>
+                <Property Name="LastChangeDate" Type="Edm.Date"/>
+                <Property Name="LastChangedByUser" Type="Edm.String" MaxLength="12"/>
+                <Property Name="LastChangeDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="IsMarkedForDeletion" Type="Edm.Boolean"/>
+                <Property Name="ProductOldID" Type="Edm.String" MaxLength="40"/>
+                <Property Name="GrossWeight" Type="Edm.Decimal" Scale="3" Precision="13"/>
+                <Property Name="PurchaseOrderQuantityUnit" Type="Edm.String" MaxLength="3"/>
+                <Property Name="SourceOfSupply" Type="Edm.String" MaxLength="1"/>
+                <Property Name="WeightUnit" Type="Edm.String" MaxLength="3"/>
+                <Property Name="NetWeight" Type="Edm.Decimal" Scale="3" Precision="13"/>
+                <Property Name="CountryOfOrigin" Type="Edm.String" MaxLength="3"/>
+                <Property Name="CompetitorID" Type="Edm.String" MaxLength="10"/>
+                <Property Name="ProductGroup" Type="Edm.String" MaxLength="9"/>
+                <Property Name="BaseUnit" Type="Edm.String" MaxLength="3"/>
+                <Property Name="ItemCategoryGroup" Type="Edm.String" MaxLength="4"/>
+                <Property Name="ProductHierarchy" Type="Edm.String" MaxLength="18"/>
+                <Property Name="Division" Type="Edm.String" MaxLength="2"/>
+                <Property Name="VarblPurOrdUnitIsActive" Type="Edm.String" MaxLength="1"/>
+                <Property Name="VolumeUnit" Type="Edm.String" MaxLength="3"/>
+                <Property Name="MaterialVolume" Type="Edm.Decimal" Scale="3" Precision="13"/>
+                <Property Name="ANPCode" Type="Edm.String" MaxLength="9"/>
+                <Property Name="Brand" Type="Edm.String" MaxLength="4"/>
+                <Property Name="ProcurementRule" Type="Edm.String" MaxLength="1"/>
+                <Property Name="ValidityStartDate" Type="Edm.Date"/>
+                <Property Name="LowLevelCode" Type="Edm.String" MaxLength="3"/>
+                <Property Name="ProdNoInGenProdInPrepackProd" Type="Edm.String" MaxLength="40"/>
+                <Property Name="SerialIdentifierAssgmtProfile" Type="Edm.String" MaxLength="4"/>
+                <Property Name="SizeOrDimensionText" Type="Edm.String" MaxLength="32"/>
+                <Property Name="IndustryStandardName" Type="Edm.String" MaxLength="18"/>
+                <Property Name="ProductStandardID" Type="Edm.String" MaxLength="18"/>
+                <Property Name="InternationalArticleNumberCat" Type="Edm.String" MaxLength="2"/>
+                <Property Name="ProductIsConfigurable" Type="Edm.Boolean"/>
+                <Property Name="IsBatchManagementRequired" Type="Edm.Boolean"/>
+                <Property Name="ExternalProductGroup" Type="Edm.String" MaxLength="18"/>
+                <Property Name="CrossPlantConfigurableProduct" Type="Edm.String" MaxLength="40"/>
+                <Property Name="SerialNoExplicitnessLevel" Type="Edm.String" MaxLength="1"/>
+                <Property Name="ProductManufacturerNumber" Type="Edm.String" MaxLength="40"/>
+                <Property Name="ManufacturerNumber" Type="Edm.String" MaxLength="10"/>
+                <Property Name="ManufacturerPartProfile" Type="Edm.String" MaxLength="4"/>
+                <Property Name="QltyMgmtInProcmtIsActive" Type="Edm.Boolean"/>
+                <Property Name="IndustrySector" Type="Edm.String" MaxLength="1"/>
+                <Property Name="ChangeNumber" Type="Edm.String" MaxLength="12"/>
+                <Property Name="MaterialRevisionLevel" Type="Edm.String" MaxLength="2"/>
+                <Property Name="HandlingIndicator" Type="Edm.String" MaxLength="4"/>
+                <Property Name="WarehouseProductGroup" Type="Edm.String" MaxLength="4"/>
+                <Property Name="WarehouseStorageCondition" Type="Edm.String" MaxLength="2"/>
+                <Property Name="StandardHandlingUnitType" Type="Edm.String" MaxLength="4"/>
+                <Property Name="SerialNumberProfile" Type="Edm.String" MaxLength="4"/>
+                <Property Name="AdjustmentProfile" Type="Edm.String" MaxLength="3"/>
+                <Property Name="PreferredUnitOfMeasure" Type="Edm.String" MaxLength="3"/>
+                <Property Name="IsPilferable" Type="Edm.Boolean"/>
+                <Property Name="IsRelevantForHzdsSubstances" Type="Edm.Boolean"/>
+                <Property Name="QuarantinePeriod" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="TimeUnitForQuarantinePeriod" Type="Edm.String" MaxLength="3"/>
+                <Property Name="QualityInspectionGroup" Type="Edm.String" MaxLength="4"/>
+                <Property Name="AuthorizationGroup" Type="Edm.String" MaxLength="4"/>
+                <Property Name="DocumentIsCreatedByCAD" Type="Edm.Boolean"/>
+                <Property Name="HandlingUnitType" Type="Edm.String" MaxLength="4"/>
+                <Property Name="HasVariableTareWeight" Type="Edm.Boolean"/>
+                <Property Name="MaximumPackagingLength" Type="Edm.Decimal" Scale="3" Precision="15"/>
+                <Property Name="MaximumPackagingWidth" Type="Edm.Decimal" Scale="3" Precision="15"/>
+                <Property Name="MaximumPackagingHeight" Type="Edm.Decimal" Scale="3" Precision="15"/>
+                <Property Name="UnitForMaxPackagingDimensions" Type="Edm.String" MaxLength="3"/>
+            </EntityType>
+            <EntityType Name="DraftAdministrativeData">
+                <Key>
+                    <PropertyRef Name="DraftUUID"/>
+                </Key>
+                <Property Name="DraftUUID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="CreationDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="CreatedByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="DraftIsCreatedByMe" Type="Edm.Boolean"/>
+                <Property Name="LastChangeDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="LastChangedByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="InProcessByUser" Type="Edm.String" MaxLength="256"/>
+                <Property Name="DraftIsProcessedByMe" Type="Edm.Boolean"/>
+            </EntityType>
+            <Action Name="updateComment" IsBound="true">
+                <Parameter Name="in" Type="SalesOrderService.SalesOrders"/>
+                <Parameter Name="comment" Type="Edm.String"/>
+                <ReturnType Type="Edm.String"/>
+            </Action>
+            <Action Name="postToErp" IsBound="true">
+                <Parameter Name="in" Type="SalesOrderService.SalesOrders"/>
+                <Parameter Name="comment" Type="Edm.String"/>
+                <ReturnType Type="Edm.String"/>
+            </Action>
+            <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="SalesOrderService.SalesOrders"/>
+                <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+                <ReturnType Type="SalesOrderService.SalesOrders"/>
+            </Action>
+            <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="SalesOrderService.SalesOrders"/>
+                <ReturnType Type="SalesOrderService.SalesOrders"/>
+            </Action>
+            <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+                <Parameter Name="in" Type="SalesOrderService.SalesOrders"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+                <ReturnType Type="SalesOrderService.SalesOrders"/>
+            </Action>
+            <Action Name="saveProducts" IsBound="false">
+                <Parameter Name="products" Type="Collection(SalesOrderService.Products)" Nullable="false"/>
+                <ReturnType Type="Edm.String"/>
+            </Action>
+            <Action Name="sayHello" IsBound="false">
+                <ReturnType Type="Edm.String"/>
+            </Action>
+            <Annotations Target="SalesOrderService.SalesOrders">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="ID"/>
+                            <PropertyValue Property="Label" String="ID"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="name"/>
+                            <PropertyValue Property="Label" String="name"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="comment"/>
+                            <PropertyValue Property="Label" String="comment"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="TypeName" String="Sales Order"/>
+                        <PropertyValue Property="TypeNamePlural" String="Sales Orders"/>
+                        <PropertyValue Property="Title">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="ID"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.Facets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="Basic Information"/>
+                            <PropertyValue Property="ID" String="BasicInformation"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#BasicInformation"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="BasicInformation">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="comment"/>
+                                    <PropertyValue Property="Label" String="comment"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="desc"/>
+                                    <PropertyValue Property="Label" String="desc"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="name"/>
+                                    <PropertyValue Property="Label" String="name"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>name</PropertyPath>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SalesOrderService.EntityContainer/SalesOrders">
+                <Annotation Term="Common.DraftRoot">
+                    <Record Type="Common.DraftRootType">
+                        <PropertyValue Property="ActivationAction" String="SalesOrderService.draftActivate"/>
+                        <PropertyValue Property="EditAction" String="SalesOrderService.draftEdit"/>
+                        <PropertyValue Property="PreparationAction" String="SalesOrderService.draftPrepare"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SalesOrderService.SalesOrders/name">
+                <Annotation Term="Common.Label" String="name"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.SalesOrders/IsActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.SalesOrders/HasActiveEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.SalesOrders/HasDraftEntity">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.SalesOrders/DraftAdministrativeData">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.SalesOrderHeaders/SalesOrderID">
+                <Annotation Term="Core.Computed" Bool="true"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.DraftAdministrativeData">
+                <Annotation Term="Common.Label" String="Draft Administrative Data"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.DraftAdministrativeData/DraftUUID">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+                <Annotation Term="Common.Label" String="Draft (Technical ID)"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.DraftAdministrativeData/CreationDateTime">
+                <Annotation Term="Common.Label" String="Draft Created On"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.DraftAdministrativeData/CreatedByUser">
+                <Annotation Term="Common.Label" String="Draft Created By"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.DraftAdministrativeData/DraftIsCreatedByMe">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+                <Annotation Term="Common.Label" String="Draft Created By Me"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.DraftAdministrativeData/LastChangeDateTime">
+                <Annotation Term="Common.Label" String="Draft Last Changed On"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.DraftAdministrativeData/LastChangedByUser">
+                <Annotation Term="Common.Label" String="Draft Last Changed By"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.DraftAdministrativeData/InProcessByUser">
+                <Annotation Term="Common.Label" String="Draft In Process By"/>
+            </Annotations>
+            <Annotations Target="SalesOrderService.DraftAdministrativeData/DraftIsProcessedByMe">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+                <Annotation Term="Common.Label" String="Draft In Process By Me"/>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

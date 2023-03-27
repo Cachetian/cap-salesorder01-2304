@@ -72,3 +72,15 @@ https://help.sap.com/docs/WZ_STD/8c8e1958338140699bd4811b37b82ece/1b80373be4fc4c
 https://cap.cloud.sap/docs/guides/authorization
 cds add xsuaa
 https://github.com/SAP-samples/cap-sflight/blob/main/mta-java.yaml
+## Logging
+cf dmol -i c87d31a4-cc49-11ed-85cb-eeee0a8afc68
+https://a9877d78trial.launchpad.cfapps.us10.hana.ondemand.com/df70e7ea-f1ae-4a7a-b7bf-72434b8fcbbc.cofcoso01capapp.cofcomgrsalesorder01mgrsalesorder01-0.0.1/index.html
+https://a9877d78trial.launchpad.cfapps.us10.hana.ondemand.com/df70e7ea-f1ae-4a7a-b7bf-72434b8fcbbc.cofcoso01capapp.cofcomgrsalesorder01mgrsalesorder01-0.0.1/odata/v4/CatalogService/$metadata?sap-language=ENs
+https://a9877d78trial.launchpad.cfapps.us10.hana.ondemand.com/df70e7ea-f1ae-4a7a-b7bf-72434b8fcbbc.cofcoso01capapp.cofcomgrsalesorder01mgrsalesorder01-0.0.1/resources/sap-ui-core.js
+LOGGING_LEVEL_CUSTOMER_COFCO_SALESORDER01_CAP debug
+cds bind --exec '--' mvn spring-boot:run -Dspring-boot.run.profiles=hybrid
+
+## Transaction
+https://cap.cloud.sap/docs/java/changeset-contexts#overview
+## Remote Service
+https://cap.cloud.sap/docs/java/remote-services

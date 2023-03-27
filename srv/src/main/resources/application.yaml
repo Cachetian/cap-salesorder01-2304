@@ -34,6 +34,12 @@ cds:
     password: admin
     roles:
     - admin
+  remote.services:
+    '[po_srv]':
+      destination:
+        name: COFCO_CAP_SO_PO
+        type: "odata-v4"
+    
 logging.level:
   org: INFO
   customer.cofco_salesorder01_cap.handlers: DEBUG

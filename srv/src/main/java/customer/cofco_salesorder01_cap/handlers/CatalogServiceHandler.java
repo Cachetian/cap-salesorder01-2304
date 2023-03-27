@@ -55,9 +55,42 @@ public class CatalogServiceHandler implements EventHandler {
 
 	@On(event = UnboundCustomHelloContext.CDS_NAME)
 	public void onUnboundCustomHello(UnboundCustomHelloContext context) {
+		onUnboundCustomHello_WithChangeSet(context);
+	}
+
+	public void onUnboundCustomHello_WithChangeSet(UnboundCustomHelloContext context) {
 		String helloInfo  = "hello " + new Date().toString();
-		messages.info(helloInfo);
-		context.setResult(helloInfo);
+
+		SalesOrders entity = SalesOrders.create();
+		entity.setName("SO00" + new Date().getTime());
+		entity.setDescription("by changeSet");
+		db.run(Insert.into(SALES_ORDERS).entry(entity));
+
+		context.getCdsRuntime().changeSetContext().run((ctx) -> {
+			// executes inside a dedicated ChangeSet Context
+			SalesOrders entityNew = SalesOrders.create();
+			entityNew.setName("SO00_New" + new Date().getTime());
+			db.run(Insert.into(SALES_ORDERS).entry(entityNew));
+		});
+		
+		String a = null;
+		if (a == null) {
+			throw new RuntimeException("Dummy Exceptions with ChangeSet");
+		}
+	}
+
+	public void onUnboundCustomHello_WithoutChangeSet(UnboundCustomHelloContext context) {
+		String helloInfo  = "hello " + new Date().toString();
+
+		SalesOrders entity = SalesOrders.create();
+		entity.setName("SO00" + new Date().getTime());
+		db.run(Insert.into(SALES_ORDERS).entry(entity));
+
+		// executes inside a dedicated ChangeSet Context
+		SalesOrders entityNew = SalesOrders.create();
+		entityNew.setName("SO00_New" + new Date().getTime());
+		db.run(Insert.into(SALES_ORDERS).entry(entityNew));
+		throw new RuntimeException("Dummy Exceptions");
 	}
 
 	@On(event = UnboundCustomCreateSalesOrderContext.CDS_NAME)
@@ -75,7 +108,7 @@ public class CatalogServiceHandler implements EventHandler {
 		LOGGER.debug("Enter onRefineDescription newDesc: {}", context.getNewDesc());
 		LOGGER.debug("RefineDescription context.cqn: {}", context.getCqn());
 		SalesOrders dbRecord = db.run(context.getCqn()).single().as(SalesOrders.class);
-		dbRecord.setDescription(dbRecord.getDescription() + "|| " + context.getNewDesc());
+		dbRecord.setDescription(dbRecord.getDescription() + "+++ " + context.getNewDesc());
 		Result result = db.run(Update.entity(SALES_ORDERS).data(dbRecord));
 		context.setResult(result.single(SalesOrders.class));
 		context.setCompleted();
